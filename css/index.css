@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap');
+
 button {
     padding: 0;
     border: none;
@@ -6,4 +8,30 @@ button {
     color: inherit;
     background: none;
     border: 5px;
+}
+#maxTempRound {
+    white-space: pre;
+    color: orangered;
+    font-size: 300%;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+#minTempRound {
+    white-space: pre;
+    color: #0d6efd;
+    font-size: 300%;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+input[type="checkbox"]{
+    transform: scale(1.5);
+}
+nav {
+    color: black;
+}
+#image_sample1 img {
+    width: 35px;
+    height: 35px;
+}
+#image_sample3 img {
+    width: 35px;
+    height: 35px;
 }

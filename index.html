@@ -39,13 +39,12 @@
                                     </li>
                                     <li class="dropdown-item-text mt-2 mb-2">
                                         <div>＜画面の説明＞</div>
-                                        <div class="">　　<img src="img/rain.png" alt="雨の画像" class="m-2"
+                                        <div id="image_sample1">　　<img src="img/rain.png" alt="雨の画像" class="m-2"
                                                 style="width: 35px; height: 35px;"><span>傘が必要です</span></div>
                                         <div class="">　　<img src="img/no_rain.png" alt="傘の画像" class="m-2"
                                                 style="width: 35px; height: 35px;"><span>傘は不要です</span></div>
                                         <div class="">　　<img src="img/snow.png" alt="雪の画像" class="m-2"
                                                 style="width: 35px; height: 35px;"><span>雪です</span></div>
-                                        <div class="">　　（）内は前日との差を表します</div>
                                     </li>
                                     <li class="dropdown-item-text">
                                         <div>天気の詳細を確認したい場合は"<i class="bi bi-question-circle"></i>"をクリックしてください。</div>
@@ -61,10 +60,26 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <button class="nav-link" onclick="detailIcon()">
-                                    <i class="bi bi-question-circle"></i> を<span id="detailText">非表示</span>
-                                </button>
+                            <li class="nav-item nav-link form-switch form-check-reverse container">
+                                <label class="row">
+                                    <div class="col-8 text-start">詳細を表示</div>
+                                    <div class="col-4 text-end"><input class="form-check-input" type="checkbox"
+                                            id="flexSwitchCheckReverse" checked></div>
+                            </label>
+                            </li>
+                            <li class="nav-item nav-link form-switch form-check-reverse container">
+                                <label class="row">
+                                    <div class="col-8 text-start">カラーアイコンを適用</div>
+                                    <div class="col-4 text-end"><input class="form-check-input" type="checkbox"
+                                            id="flexSwitchCheckReverse2" checked></div>
+                            </label>
+                            </li>
+                            <li class="nav-item nav-link form-switch form-check-reverse container">
+                                <label class="row">
+                                    <div class="col-8 text-start">カラーフォントを適用</div>
+                                    <div class="col-4 text-end"><input class="form-check-input" type="checkbox"
+                                            id="flexSwitchCheckReverse3" checked></div>
+                            </label>
                             </li>
                             <li class="nav-item">
                                 <div class="nav-link">場所の変更</div>
@@ -73,7 +88,7 @@
                         <form class="d-flex" role="search" id="searchForm">
                             <input class="form-control me-2" type="search" placeholder="例：東京都北区" aria-label="Search"
                                 id="searchInput">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
                         </form>
                         <small id="error" class="text-danger"></small>
                     </div>
@@ -100,29 +115,24 @@
                     <div class="col-6 p-4 text-center d-flex flex-column justify-content-around" id="image">
                     </div>
                     <div class="col-6 p-2 d-flex flex-column justify-content-around" style="height:230px;">
-                        <div class="border border-2 p-2">
-                            <p>最高気温</p>
-                            <p class="text-center"><span class="maxTemp"></span>℃（<span class="maxTempDiff"></span>℃）
-                            </p>
+                        <div class="">
+                            <div>最高気温</div>
+                            <div class="text-center" id="maxTempRound"></div>
                         </div>
-                        <div class="border border-2 p-2">
-                            <p>最低気温</p>
-                            <p class="text-center"><span class="minTemp"></span>℃（<span class="minTempDiff"></span>℃）
-                            </p>
+                        <div class="">
+                            <div>最低気温</div>
+                            <div class="text-center" id="minTempRound"></div>
                         </div>
                     </div>
+
                 </div>
-                <div class="row">
-                    <button onclick="detailShow();" id="detailIcon" class="text-end">
-                        <i class="bi bi-question-circle text-secondary"></i>
-                    </button>
-                </div>
-                <div class="row d-none mb-4" id="detail">
+                <div class="row mt-4 mb-4" id="detail">
                     <h6><span id="time"></span>　<span class="address"></span></h6>
                     <div>天気：<span id="description"></span>　<span id="need"></span></div>
-                    <div>最高気温：<span class="maxTemp"></span>℃（前日との差<span class="maxTempDiff"></span>℃）</div>
-                    <div>最低気温：<span class="minTemp"></span>℃（前日との差<span class="minTempDiff"></span>℃）</div>
-                    <small class="mt-3 text-secondary">緯度：<span id="latitude"></span>　経度：<span id="longitude"></span></small>
+                    <div>最高気温：<span id="maxTemp"></span>℃（前日との差<span id="maxTempDiff"></span>℃）</div>
+                    <div>最低気温：<span id="minTemp"></span>℃（前日との差<span id="minTempDiff"></span>℃）</div>
+                    <small class="mt-3 text-secondary">緯度：<span id="latitude"></span>　経度：<span
+                            id="longitude"></span></small>
                 </div>
             </div>
 

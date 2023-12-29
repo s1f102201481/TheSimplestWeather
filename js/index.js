@@ -116,9 +116,14 @@ function getWeatherDescription(weatherCode) {
 }
 
 let day = 1 //yesterday = 0; today = 1; tommorow = 2;
+let colorIcon = true;
+let colorFont = true;
 function detail() {
     document.getElementById('latitude').textContent = locationData['latitude'];
     document.getElementById('longitude').textContent = locationData['longitude'];
+
+    document.getElementById('maxTempRound').style.color = colorFont ? "orangered" : "#5B5B5B";
+    document.getElementById('minTempRound').style.color = colorFont ? "#0d6efd" : "#5B5B5B";
 
     for (let i = 0; i < 2; i++) {
         document.getElementsByClassName('address')[i].textContent = locationData['address'];
@@ -127,7 +132,8 @@ function detail() {
     let weatherData = weatherDataList[day];
     let weatherDescription = getWeatherDescription(weatherData['weather_code']);
     if (weatherDescription.isUmbrellaRequired === 0) {
-        document.getElementById('image').innerHTML = '<img src="img/rain.png" alt="雨の画像" class="img-fluid mx-auto d-block" style="max-width: 100%; max-height: 200px; height: auto;">';
+        document.getElementById('image').innerHTML = 
+        colorIcon ? '<img src="img/rain_color.png" alt="雨の画像" class="img-fluid mx-auto d-block" style="max-width: 100%; max-height: 200px; height: auto;">' : '<img src="img/rain.png" alt="雨の画像" class="img-fluid mx-auto d-block" style="max-width: 100%; max-height: 200px; height: auto;">';
         document.getElementById('need').innerHTML = '<strong>傘が必要です</strong>';
     }
     else if (weatherDescription.isUmbrellaRequired === 1) {
@@ -135,11 +141,17 @@ function detail() {
         document.getElementById('need').innerHTML = '傘は不要です';
     }
     else {
-        document.getElementById('image').innerHTML = '<img src="img/snow.png" alt="雪の画像" class="img-fluid mx-auto d-block" style="max-width: 100%; max-height: 200px; height: auto;">';
+        document.getElementById('image').innerHTML = 
+        colorIcon ? '<img src="img/snow_color.png" alt="雪の画像" class="img-fluid mx-auto d-block" style="max-width: 100%; max-height: 200px; height: auto;">' : '<img src="img/snow.png" alt="雪の画像" class="img-fluid mx-auto d-block" style="max-width: 100%; max-height: 200px; height: auto;">';
         document.getElementById('need').innerHTML = '<strong>雪です</strong>';
     }
     document.getElementById('description').textContent = weatherDescription.description;
     document.getElementById('time').textContent = weatherData['time'];
+}
+
+function roundAndFormattTemp(temp) {
+    let roundedTemp = Math.round(temp);
+    return roundedTemp+'<small>℃</small>';
 }
 
 function today() {
@@ -152,12 +164,17 @@ function today() {
     if (minTempDiff >= 0) {
         minTempDiff = '+' + minTempDiff;
     }
-    for (let i = 0; i < 2; i++) {
-        document.getElementsByClassName('maxTemp')[i].textContent = todayData['temperature_2m_max'];
-        document.getElementsByClassName('maxTempDiff')[i].textContent = maxTempDiff;
-        document.getElementsByClassName('minTemp')[i].textContent = todayData['temperature_2m_min'];
-        document.getElementsByClassName('minTempDiff')[i].textContent = minTempDiff;    
-    }
+    let maxTempRound = roundAndFormattTemp(todayData['temperature_2m_max']);
+    let minTempRound = roundAndFormattTemp(todayData['temperature_2m_min']);
+    document.getElementById('maxTempRound').innerHTML = maxTempRound;
+    document.getElementById('minTempRound').innerHTML = minTempRound;
+    
+    document.getElementById('maxTemp').textContent = todayData['temperature_2m_max'];
+    document.getElementById('minTemp').textContent = todayData['temperature_2m_min'];
+    
+    document.getElementById('maxTempDiff').textContent = maxTempDiff;
+    document.getElementById('minTempDiff').textContent = minTempDiff;    
+
     document.getElementById('tomorrow').classList.add("border-bottom");
     document.getElementById('today').classList.remove("border-bottom");
     detail();
@@ -173,34 +190,20 @@ function tomorrow() {
     if (minTempDiff >= 0) {
         minTempDiff = '+' + minTempDiff;
     }
-    for (let i = 0; i < 2; i++) {
-        document.getElementsByClassName('maxTemp')[i].textContent = tomorrowData['temperature_2m_max'];
-        document.getElementsByClassName('maxTempDiff')[i].textContent = maxTempDiff;
-        document.getElementsByClassName('minTemp')[i].textContent = tomorrowData['temperature_2m_min'];
-        document.getElementsByClassName('minTempDiff')[i].textContent = minTempDiff;    
-    }
+    let maxTempRound = roundAndFormattTemp(tomorrowData['temperature_2m_max']);
+    let minTempRound = roundAndFormattTemp(tomorrowData['temperature_2m_min']);
+    document.getElementById('maxTempRound').innerHTML = maxTempRound;
+    document.getElementById('minTempRound').innerHTML = minTempRound;
+    
+    document.getElementById('maxTemp').textContent = tomorrowData['temperature_2m_max'];
+    document.getElementById('minTemp').textContent = tomorrowData['temperature_2m_min'];
+    
+    document.getElementById('maxTempDiff').textContent = maxTempDiff;
+    document.getElementById('minTempDiff').textContent = minTempDiff;    
+
     document.getElementById('today').classList.add("border-bottom");
     document.getElementById('tomorrow').classList.remove("border-bottom");
     detail();
-}
-
-function detailShow() {
-    document.getElementById('detail').classList.toggle("d-none");
-}
-
-let detailIconFlag = true;
-function detailIcon() {
-    detailIconFlag = !detailIconFlag;
-    const detailText = document.getElementById('detailText');
-    const detailIcon = document.getElementById('detailIcon');
-    if (detailIconFlag) {
-        detailText.textContent = '非表示';
-        detailIcon.innerHTML = '<i class="bi bi-question-circle text-secondary"></i>'
-    } else {
-        detailText.textContent = '表示';
-        detailIcon.innerHTML = '';
-        document.getElementById('detail').classList.add("d-none");
-    }
 }
 
 // ページが読み込まれたときに初期の住所で実行
@@ -215,4 +218,33 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
     inputAddress = document.getElementById('searchInput').value;
 
     getWeather(inputAddress);
+
+    // ナビゲーションを閉じる
+    const myOffCanvas = document.getElementById('offcanvasNavbar');
+    let openedCanvas = bootstrap.Offcanvas.getInstance(myOffCanvas);
+    openedCanvas.hide();
 });
+
+let checkbox = document.getElementById('flexSwitchCheckReverse');
+checkbox.addEventListener('change', function() {
+    // チェックボックスがチェックされているかどうかを確認
+    if (checkbox.checked) {
+        // チェックされている場合の処理
+        document.getElementById('detail').classList.remove("d-none")
+    } else {
+        // チェックされていない場合の処理
+        document.getElementById('detail').classList.add("d-none")
+    }
+});;
+
+let checkbox2 = document.getElementById('flexSwitchCheckReverse2');
+checkbox2.addEventListener('change', function() {
+    colorIcon = !colorIcon;
+    detail();
+});;
+
+let checkbox3 = document.getElementById('flexSwitchCheckReverse3');
+checkbox3.addEventListener('change', function() {
+    colorFont = !colorFont;
+    detail();
+});;
