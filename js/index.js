@@ -51,12 +51,14 @@ function getWeather(inputAddress) {
                 weatherDataList[i]['temperature_2m_min'] = weatherData.daily.temperature_2m_min[i];
                 //weatherDataList['city'] = ;
             }
-            // ナビゲーションを閉じる
+            today();
             const myOffCanvas = document.getElementById('offcanvasNavbar');
             let openedCanvas = bootstrap.Offcanvas.getInstance(myOffCanvas);
-            openedCanvas.hide();
-            
-            today();
+
+            // ナビゲーションが開いている場合のみ処理を実行
+            if (openedCanvas && openedCanvas._isShown) {
+                openedCanvas.hide();
+            }
             document.getElementById('error').innerHTML = '';
     })
     .catch(error => {
