@@ -51,6 +51,11 @@ function getWeather(inputAddress) {
                 weatherDataList[i]['temperature_2m_min'] = weatherData.daily.temperature_2m_min[i];
                 //weatherDataList['city'] = ;
             }
+            // ナビゲーションを閉じる
+            const myOffCanvas = document.getElementById('offcanvasNavbar');
+            let openedCanvas = bootstrap.Offcanvas.getInstance(myOffCanvas);
+            openedCanvas.hide();
+            
             today();
             document.getElementById('error').innerHTML = '';
     })
@@ -218,11 +223,6 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
     inputAddress = document.getElementById('searchInput').value;
 
     getWeather(inputAddress);
-
-    // ナビゲーションを閉じる
-    const myOffCanvas = document.getElementById('offcanvasNavbar');
-    let openedCanvas = bootstrap.Offcanvas.getInstance(myOffCanvas);
-    openedCanvas.hide();
 });
 
 let checkbox = document.getElementById('flexSwitchCheckReverse');
