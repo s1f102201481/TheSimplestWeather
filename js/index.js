@@ -129,8 +129,8 @@ function detail() {
     document.getElementById('latitude').textContent = locationData['latitude'];
     document.getElementById('longitude').textContent = locationData['longitude'];
 
-    document.getElementById('maxTempRound').style.color = colorFont ? "orangered" : "#5B5B5B";
-    document.getElementById('minTempRound').style.color = colorFont ? "#0d6efd" : "#5B5B5B";
+    document.getElementById('maxTempRound').style.color = colorFont ? "orangered" : "black";
+    document.getElementById('minTempRound').style.color = colorFont ? "#0d6efd" : "black";
 
     for (let i = 0; i < 2; i++) {
         document.getElementsByClassName('address')[i].textContent = locationData['address'];
